@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit" Version="8.3.0" />
+    <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.3.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DNATestingSystem.BusinessObject.Shared.Model.TienDM\DNATestingSystem.BusinessObject.Shared.Model.TienDM.csproj" />
+    <ProjectReference Include="..\DNATestingSystem.Common.Shared.TienDM\DNATestingSystem.Common.Shared.TienDM.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,6 @@
+@DNATestingSystem.AppointmentStatusesTienDm.Microservices.TienDM_HostAddress = http://localhost:5131
+
+GET {{DNATestingSystem.AppointmentStatusesTienDm.Microservices.TienDM_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

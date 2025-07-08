@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNATestingSystem.BusinessObject.Shared.Model.TienDM", "DNATestingSystem.BusinessObject.Shared.Model.TienDM\DNATestingSystem.BusinessObject.Shared.Model.TienDM.csproj", "{B0F58604-5901-48B1-9519-75B777163534}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNATestingSystem.Common.Shared.TienDM", "DNATestingSystem.Common.Shared.TienDM\DNATestingSystem.Common.Shared.TienDM.csproj", "{0C07B281-2650-4634-AE77-33D438BC4582}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNATestingSystem.OcelotAPIGateway.TienDM", "DNATestingSystem.OcelotAPIGateway.TienDm\DNATestingSystem.OcelotAPIGateway.TienDM.csproj", "{AA9997E5-379B-4B10-B3D2-87F50DD9C117}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNATestingSystem.AppointmentsTienDm.Microservices.TienDM", "DNATestingSystem.AppointmentsTienDm.Microservices.TienDM\DNATestingSystem.AppointmentsTienDm.Microservices.TienDM.csproj", "{07B05C2E-E634-454D-B0F2-E6837F3BD40B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNATestingSystem.AppointmentStatusesTienDm.Microservices.TienDM", "DNATestingSystem.AppointmentStatusesTienDm.Microservices.TienDM\DNATestingSystem.AppointmentStatusesTienDm.Microservices.TienDM.csproj", "{CDE46155-AC72-4217-B1A2-E38D2E7F9894}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B0F58604-5901-48B1-9519-75B777163534}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0F58604-5901-48B1-9519-75B777163534}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0F58604-5901-48B1-9519-75B777163534}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0F58604-5901-48B1-9519-75B777163534}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C07B281-2650-4634-AE77-33D438BC4582}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C07B281-2650-4634-AE77-33D438BC4582}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C07B281-2650-4634-AE77-33D438BC4582}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C07B281-2650-4634-AE77-33D438BC4582}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA9997E5-379B-4B10-B3D2-87F50DD9C117}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA9997E5-379B-4B10-B3D2-87F50DD9C117}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA9997E5-379B-4B10-B3D2-87F50DD9C117}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA9997E5-379B-4B10-B3D2-87F50DD9C117}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07B05C2E-E634-454D-B0F2-E6837F3BD40B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07B05C2E-E634-454D-B0F2-E6837F3BD40B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07B05C2E-E634-454D-B0F2-E6837F3BD40B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07B05C2E-E634-454D-B0F2-E6837F3BD40B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDE46155-AC72-4217-B1A2-E38D2E7F9894}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDE46155-AC72-4217-B1A2-E38D2E7F9894}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDE46155-AC72-4217-B1A2-E38D2E7F9894}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDE46155-AC72-4217-B1A2-E38D2E7F9894}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E6106DE3-0A2B-4C80-A109-40EC94B34E40}
+	EndGlobalSection
+EndGlobal

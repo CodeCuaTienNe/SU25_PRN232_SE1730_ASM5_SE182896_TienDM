@@ -1,0 +1,52 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/AppointmentsTienDm",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "7001"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/AppointmentsTienDm",
+      "UpstreamHttpMethod": ["POST", "PUT", "GET", "DELETE"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/AppointmentsTienDm/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "7001"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/AppointmentsTienDm/{id}",
+      "UpstreamHttpMethod": ["GET", "PUT", "DELETE"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/AppointmentStatusesTienDm",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "7002"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/AppointmentStatusesTienDm",
+      "UpstreamHttpMethod": ["POST", "PUT", "GET", "DELETE"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/AppointmentStatusesTienDm/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "7002"
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/AppointmentStatusesTienDm/{id}",
+      "UpstreamHttpMethod": ["GET", "PUT", "DELETE"]
+    }
+  ]
+}
