@@ -26,7 +26,7 @@ namespace Micro1.Client.MauiHybridApp.TienDM
                 };
                 return new HttpClient(handler)
                 {
-                    BaseAddress = new Uri("https://10.0.2.2:7000/")
+                    BaseAddress = new Uri("https://10.0.2.2:7214/")
                 };
             });
 

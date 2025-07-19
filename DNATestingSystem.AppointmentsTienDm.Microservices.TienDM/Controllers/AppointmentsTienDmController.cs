@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using DNATestingSystem.BusinessObject.Shared.Model.TienDM.Models;
 using DNATestingSystem.Common.Shared.TienDM;
 using MassTransit;
+using DNATestingSystem.AppointmentsTienDm.Microservices.TienDM.DTOs;
 using AppointmentModel = DNATestingSystem.BusinessObject.Shared.Model.TienDM.Models.AppointmentsTienDm;
 
 namespace DNATestingSystem.AppointmentsTienDm.Microservices.TienDM.Controllers
@@ -20,8 +21,8 @@ namespace DNATestingSystem.AppointmentsTienDm.Microservices.TienDM.Controllers
                 UserAccountId = 1,
                 ServicesNhanVtid = 1,
                 AppointmentStatusesTienDmid = 1,
-                AppointmentDate = DateTime.Now.AddDays(1),
-                AppointmentTime = "14:30:00",
+                AppointmentDate = DateOnly.FromDateTime(DateTime.Now.AddDays(1)),
+                AppointmentTime = new TimeOnly(14, 30, 0),
                 SamplingMethod = "Blood",
                 Address = "123 Main St",
                 ContactPhone = "0123456789",
@@ -36,8 +37,8 @@ namespace DNATestingSystem.AppointmentsTienDm.Microservices.TienDM.Controllers
                 UserAccountId = 2,
                 ServicesNhanVtid = 2,
                 AppointmentStatusesTienDmid = 2,
-                AppointmentDate = DateTime.Now.AddDays(2),
-                AppointmentTime = "10:00:00",
+                AppointmentDate = DateOnly.FromDateTime(DateTime.Now.AddDays(2)),
+                AppointmentTime = new TimeOnly(10, 0, 0),
                 SamplingMethod = "Saliva",
                 Address = "456 Oak Ave",
                 ContactPhone = "0987654321",
@@ -79,13 +80,29 @@ namespace DNATestingSystem.AppointmentsTienDm.Microservices.TienDM.Controllers
 
         // POST: api/AppointmentsTienDm
         [HttpPost]
-        public async Task<ActionResult<AppointmentModel>> PostAppointment(AppointmentModel appointment)
+        public async Task<ActionResult<AppointmentModel>> PostAppointment(AppointmentCreateDto appointmentDto)
         {
             try
             {
+                // Convert DTO to model with proper date/time conversion
+                var appointment = new AppointmentModel
+                {
+                    UserAccountId = appointmentDto.UserAccountId,
+                    ServicesNhanVtid = appointmentDto.ServicesNhanVtid,
+                    AppointmentStatusesTienDmid = appointmentDto.AppointmentStatusesTienDmid,
+                    AppointmentDate = DateOnly.Parse(appointmentDto.AppointmentDate),
+                    AppointmentTime = TimeOnly.Parse(appointmentDto.AppointmentTime),
+                    SamplingMethod = appointmentDto.SamplingMethod,
+                    Address = appointmentDto.Address,
+                    ContactPhone = appointmentDto.ContactPhone,
+                    Notes = appointmentDto.Notes,
+                    TotalAmount = appointmentDto.TotalAmount,
+                    IsPaid = appointmentDto.IsPaid,
+                    CreatedDate = DateTime.Now
+                };
+
                 // Set ID and timestamps
                 appointment.AppointmentsTienDmid = _appointments.Count > 0 ? _appointments.Max(a => a.AppointmentsTienDmid) + 1 : 1;
-                appointment.CreatedDate = DateTime.Now;
 
                 // Add to list
                 _appointments.Add(appointment);
