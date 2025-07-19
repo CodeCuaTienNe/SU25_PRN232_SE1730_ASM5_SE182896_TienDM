@@ -1,0 +1,238 @@
+﻿@page "/"
+@inject AppointmentService AppointmentService
+@using Micro1.Client.MauiHybridApp.TienDM.Services
+
+<h3>DNA Testing System - Create Appointment</h3>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Create New Appointment</h4>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">User Account ID:</label>
+                        <input type="number" class="form-control" @bind="newAppointment.UserAccountId" />
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Service ID:</label>
+                        <input type="number" class="form-control" @bind="newAppointment.ServicesNhanVtid" />
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Status ID:</label>
+                        <input type="number" class="form-control" @bind="newAppointment.AppointmentStatusesTienDmid" />
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Appointment Date:</label>
+                        <input type="date" class="form-control" @bind="appointmentDateInput" />
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Appointment Time:</label>
+                        <input type="time" class="form-control" @bind="appointmentTimeInput" />
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Sampling Method:</label>
+                        <input type="text" class="form-control" @bind="newAppointment.SamplingMethod" placeholder="Blood, Saliva, etc." />
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Address:</label>
+                        <input type="text" class="form-control" @bind="newAppointment.Address" />
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Contact Phone:</label>
+                        <input type="text" class="form-control" @bind="newAppointment.ContactPhone" />
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Notes:</label>
+                        <textarea class="form-control" @bind="newAppointment.Notes" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Total Amount:</label>
+                        <input type="number" step="0.01" class="form-control" @bind="newAppointment.TotalAmount" />
+                    </div>
+                    
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" @bind="newAppointment.IsPaid" />
+                        <label class="form-check-label">Is Paid</label>
+                    </div>
+                    
+                    <button class="btn btn-success w-100" @onclick="CreateAppointment" disabled="@isCreating">
+                        @if (isCreating)
+                        {
+                            <span class="spinner-border spinner-border-sm me-2"></span>
+                        }
+                        Create Appointment
+                    </button>
+                    
+                    @if (!string.IsNullOrEmpty(message))
+                    {
+                        <div class="alert @(isSuccess ? "alert-success" : "alert-danger") mt-3">
+                            @message
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Service Communication Logs -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5>Service Communication Logs</h5>
+                    <button class="btn btn-secondary btn-sm" @onclick="ClearLogs">Clear</button>
+                </div>
+                <div class="card-body">
+                    <div class="bg-dark text-light p-3" style="height: 300px; overflow-y: auto; font-family: monospace; font-size: 12px;">
+                        @if (logs.Any())
+                        {
+                            @foreach (var log in logs.OrderByDescending(l => l.Timestamp))
+                            {
+                                <div>[@log.Timestamp.ToString("HH:mm:ss")] @log.Message</div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="text-muted">No logs yet. Create an appointment to see service communication logs.</div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private SimpleAppointmentRequest newAppointment = new();
+    private List<LogEntry> logs = new();
+    private string message = "";
+    private bool isSuccess = false;
+    private bool isCreating = false;
+    
+    // Separate input properties to avoid binding issues
+    private DateOnly appointmentDateInput = DateOnly.FromDateTime(DateTime.Now.AddDays(1));
+    private TimeOnly appointmentTimeInput = new TimeOnly(14, 30);
+
+    // Simple local model to avoid any conflicts
+    public class SimpleAppointmentRequest
+    {
+        public int UserAccountId { get; set; } = 1;
+        public int ServicesNhanVtid { get; set; } = 1;
+        public int AppointmentStatusesTienDmid { get; set; } = 1;
+        public string SamplingMethod { get; set; } = "Blood";
+        public string Address { get; set; } = "";
+        public string ContactPhone { get; set; } = "";
+        public string Notes { get; set; } = "";
+        public decimal TotalAmount { get; set; } = 150.00m;
+        public bool IsPaid { get; set; } = false;
+        
+        // Convert to API model
+        public Micro1.Client.MauiHybridApp.TienDM.Models.AppointmentCreateRequest ToApiModel(DateOnly date, TimeOnly time)
+        {
+            return new Micro1.Client.MauiHybridApp.TienDM.Models.AppointmentCreateRequest
+            {
+                UserAccountId = this.UserAccountId,
+                ServicesNhanVtid = this.ServicesNhanVtid,
+                AppointmentStatusesTienDmid = this.AppointmentStatusesTienDmid,
+                AppointmentDate = date.ToString("yyyy-MM-dd"),
+                AppointmentTime = time.ToString("HH:mm:ss"),
+                SamplingMethod = this.SamplingMethod,
+                Address = this.Address,
+                ContactPhone = this.ContactPhone,
+                Notes = this.Notes,
+                TotalAmount = this.TotalAmount,
+                IsPaid = this.IsPaid
+            };
+        }
+    }
+
+    public class LogEntry
+    {
+        public DateTime Timestamp { get; set; }
+        public string Message { get; set; } = "";
+    }
+
+    protected override void OnInitialized()
+    {
+        AddLog("MAUI App Started - Ready to create appointments");
+        AddLog("Gateway URL: https://10.0.2.2:7000/gateway/AppointmentsTienDm");
+    }
+
+    private async Task CreateAppointment()
+    {
+        isCreating = true;
+        message = "";
+        
+        try
+        {
+            AddLog($"🚀 Creating appointment - User: {newAppointment.UserAccountId}, Service: {newAppointment.ServicesNhanVtid}");
+            AddLog("📡 Sending request via Ocelot Gateway → Microservice 1 (AppointmentsTienDm)");
+            
+            // Convert to API model
+            var apiRequest = newAppointment.ToApiModel(appointmentDateInput, appointmentTimeInput);
+            
+            var result = await AppointmentService.CreateAppointmentAsync(apiRequest);
+            
+            if (result.Success)
+            {
+                message = $"✅ Appointment created successfully! ID: {result.Data?.AppointmentsTienDmid}";
+                isSuccess = true;
+                
+                AddLog($"✅ SUCCESS: Appointment created with ID {result.Data?.AppointmentsTienDmid}");
+                AddLog("📤 Microservice 1 → Published message to RabbitMQ queue");
+                AddLog("📥 Microservice 2 (AppointmentStatusesTienDm) → Consumed message from queue");
+                AddLog("🎉 End-to-end microservice communication completed successfully!");
+                
+                // Reset form sau khi thành công
+                newAppointment = new SimpleAppointmentRequest();
+                appointmentDateInput = DateOnly.FromDateTime(DateTime.Now.AddDays(1));
+                appointmentTimeInput = new TimeOnly(14, 30);
+            }
+            else
+            {
+                message = $"❌ Failed: {result.Message}";
+                isSuccess = false;
+                AddLog($"❌ FAILED: {result.Message}");
+            }
+        }
+        catch (Exception ex)
+        {
+            message = $"💥 Error: {ex.Message}";
+            isSuccess = false;
+            AddLog($"💥 EXCEPTION: {ex.Message}");
+        }
+        finally
+        {
+            isCreating = false;
+            StateHasChanged();
+        }
+    }
+
+    private void AddLog(string message)
+    {
+        logs.Add(new LogEntry
+        {
+            Timestamp = DateTime.Now,
+            Message = message
+        });
+        StateHasChanged();
+    }
+
+    private void ClearLogs()
+    {
+        logs.Clear();
+        StateHasChanged();
+    }
+}

@@ -12,7 +12,41 @@ namespace DNATestingSystem.AppointmentsTienDm.Microservices.TienDM.Controllers
     {
         private readonly IBus _bus;
         private readonly ILogger<AppointmentsTienDmController> _logger;
-        private static List<AppointmentModel> _appointments = new List<AppointmentModel>();
+        private static List<AppointmentModel> _appointments = new List<AppointmentModel>
+        {
+            new AppointmentModel
+            {
+                AppointmentsTienDmid = 1,
+                UserAccountId = 1,
+                ServicesNhanVtid = 1,
+                AppointmentStatusesTienDmid = 1,
+                AppointmentDate = DateTime.Now.AddDays(1),
+                AppointmentTime = "14:30:00",
+                SamplingMethod = "Blood",
+                Address = "123 Main St",
+                ContactPhone = "0123456789",
+                Notes = "Sample appointment",
+                TotalAmount = 150.00m,
+                IsPaid = false,
+                CreatedDate = DateTime.Now
+            },
+            new AppointmentModel
+            {
+                AppointmentsTienDmid = 2,
+                UserAccountId = 2,
+                ServicesNhanVtid = 2,
+                AppointmentStatusesTienDmid = 2,
+                AppointmentDate = DateTime.Now.AddDays(2),
+                AppointmentTime = "10:00:00",
+                SamplingMethod = "Saliva",
+                Address = "456 Oak Ave",
+                ContactPhone = "0987654321",
+                Notes = "Follow-up test",
+                TotalAmount = 200.00m,
+                IsPaid = true,
+                CreatedDate = DateTime.Now
+            }
+        };
 
         public AppointmentsTienDmController(IBus bus, ILogger<AppointmentsTienDmController> logger)
         {
@@ -59,8 +93,8 @@ namespace DNATestingSystem.AppointmentsTienDm.Microservices.TienDM.Controllers
                 // Send message to RabbitMQ
                 await _bus.Publish(appointment);
 
-                string messageLog = string.Format("[{0}] PUBLISH data to RabbitMQ.appointmentsTienDmQueue: {1}",
-                    DateTime.Now.ToString(),
+                string messageLog = string.Format("[{0}] SEND DATA to Queue: {1}",
+                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                     Utilities.ConvertObjectToJsonString(appointment));
 
                 Utilities.WriteLoggerFile(messageLog);
@@ -123,8 +157,8 @@ namespace DNATestingSystem.AppointmentsTienDm.Microservices.TienDM.Controllers
             }
 
             _appointments.Remove(appointment);
-            _logger.LogInformation($"Deleted appointment with ID {id}");
 
+            _logger.LogInformation($"Deleted appointment with ID {id}");
             return NoContent();
         }
     }

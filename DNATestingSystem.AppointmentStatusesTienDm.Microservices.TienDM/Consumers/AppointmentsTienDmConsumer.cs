@@ -19,8 +19,8 @@ namespace DNATestingSystem.AppointmentStatusesTienDm.Microservices.TienDM.Consum
             var appointment = context.Message;
             if (appointment != null)
             {
-                string messageLog = string.Format("[{0}] CONSUME data from RabbitMQ.appointmentsTienDmQueue: {1}",
-                    DateTime.Now.ToString(),
+                string messageLog = string.Format("[{0}] RECEIVE DATA from Queue: {1}",
+                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                     Utilities.ConvertObjectToJsonString(appointment));
                 Utilities.WriteLoggerFile(messageLog);
                 _logger.LogInformation(messageLog);

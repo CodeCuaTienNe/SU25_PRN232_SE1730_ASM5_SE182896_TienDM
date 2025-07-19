@@ -102,8 +102,8 @@ namespace DNATestingSystem.AppointmentStatusesTienDm.Microservices.TienDM.Contro
 
             // Soft delete by setting IsActive to false
             status.IsActive = false;
-            _logger.LogInformation($"Soft deleted status with ID {id}");
 
+            _logger.LogInformation($"Soft deleted status with ID {id}");
             return NoContent();
         }
     }
